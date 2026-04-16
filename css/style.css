@@ -612,6 +612,10 @@ p:last-child { margin-bottom: 0; }
 .activity-pill.highlight { background: var(--blue-pale);   border-color: var(--blue-light);  color: #2252c0; }
 .activity-pill.special   { background: var(--mint-pale);   border-color: #6ee7b7;            color: #047857; font-weight: 700; }
 .activity-pill.fun       { background: var(--purple-pale); border-color: #c4b5fd;            color: #5b21b6; }
+a.activity-pill { text-decoration: none; cursor: pointer; transition: background .18s, border-color .18s, box-shadow .18s; }
+a.activity-pill:hover { background: var(--blue-pale); border-color: var(--blue); color: var(--blue); box-shadow: 0 2px 8px rgba(91,141,238,.18); text-decoration: none; }
+a.activity-pill.highlight:hover { background: #dbeaff; border-color: var(--blue); color: #1a3d99; }
+a.activity-pill.special:hover   { background: #a7f3d0; border-color: #10b981;    color: #065f46; }
 
 /* ===== FAQ ACCORDION ===== */
 .faq-item {
