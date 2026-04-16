@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ & AI Assistant — Robocamp 2026</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Inline chat on FAQ page */
+    .inline-chat {
+      background: var(--surface);
+      border-radius: var(--r-xl);
+      border: 2px solid var(--blue-light);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      max-width: 700px;
+      margin: 0 auto 3rem;
+    }
+    .inline-chat-header {
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      color: #fff;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+    .inline-chat-avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      border: 2px solid rgba(255,255,255,.35);
+      flex-shrink: 0;
+    }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--mint); display: inline-block; margin-right: 4px; animation: pulse 2s infinite; }
+    .inline-chat-messages {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+      min-height: 260px;
+      max-height: 440px;
+      overflow-y: auto;
+      background: var(--surface-alt);
+    }
+    .inline-chat-messages::-webkit-scrollbar { width: 4px; }
+    .inline-chat-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    .inline-quick-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      padding: .85rem 1.25rem;
+      background: var(--surface);
+      border-top: 1.5px solid var(--border-soft);
+    }
+    .inline-chat-input-area {
+      border-top: 1.5px solid var(--border-soft);
+      padding: 1rem 1.25rem;
+      display: flex;
+      gap: .5rem;
+      background: var(--surface);
+    }
+    #inline-chat-input {
+      flex: 1;
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-md);
+      padding: .7rem 1rem;
+      font-size: .9rem;
+      font-family: var(--font-body);
+      outline: none;
+      background: var(--surface-alt);
+      transition: border-color .2s, box-shadow .2s;
+    }
+    #inline-chat-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(91,141,238,.15); }
+    #inline-chat-send {
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      color: #fff;
+      border: none;
+      border-radius: var(--r-md);
+      padding: .7rem 1.25rem;
+      font-weight: 700;
+      font-size: .9rem;
+      cursor: pointer;
+      transition: all .2s;
+      font-family: var(--font-body);
+      white-space: nowrap;
+      box-shadow: 0 3px 10px rgba(91,141,238,.3);
+    }
+    #inline-chat-send:hover { transform: translateY(-1px); box-shadow: 0 5px 16px rgba(91,141,238,.4); }
+    .faq-section-title {
+      font-size: .88rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--blue);
+      background: var(--blue-pale);
+      padding: .5rem 1rem;
+      border-radius: var(--r-pill);
+      display: inline-block;
+      margin: 2rem 0 1rem;
+    }
+  </style>
+</head>
+<body class="page-top">
+
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-brand">
+      <div class="brand-badge"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="8" width="16" height="11" rx="3" fill="white" opacity=".9"/><circle cx="8" cy="13.5" r="1.8" fill="#a78bfa"/><circle cx="14" cy="13.5" r="1.8" fill="#a78bfa"/><rect x="8" y="4" width="2" height="5" rx="1" fill="white" opacity=".9"/><rect x="12" y="4" width="2" height="5" rx="1" fill="white" opacity=".9"/><rect x="1" y="12" width="3" height="2.5" rx="1" fill="white" opacity=".8"/><rect x="18" y="12" width="3" height="2.5" rx="1" fill="white" opacity=".8"/></svg></div>
+      <div class="brand-text">Robocamp '26<span class="brand-sub">Westwood Robotics</span></div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">🏠 Home</a>
+      <a href="sessions.html">📅 Sessions</a>
+      <a href="schedule.html">🗓 Schedule</a>
+      <a href="activities.html">🎯 Activities</a>
+      <a href="policies.html">📋 Policies</a>
+      <a href="faq.html" class="active">💬 FAQ</a>
+      <a href="https://westwoodrobots.org/robocamp" target="_blank" class="nav-cta">✨ Register Now</a>
+    </div>
+    <button class="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-nav">
+  <a href="index.html">🏠 Home</a>
+  <a href="sessions.html">📅 Sessions & Dates</a>
+  <a href="schedule.html">🗓 Daily Schedule</a>
+  <a href="activities.html">🎯 Activities</a>
+  <a href="policies.html">📋 Policies & Rules</a>
+  <a href="faq.html">💬 FAQ & AI Chat</a>
+  <a href="https://westwoodrobots.org/robocamp" target="_blank" class="nav-cta">✨ Register Now →</a>
+</div>
+
+<div class="page-hero">
+  <div class="container">
+    <span class="section-label">🤖 AI-Powered Help</span>
+    <h1>FAQ & AI Assistant</h1>
+    <p>Get instant answers about Robocamp 2026! Type any question — our AI assistant knows the whole handbook.</p>
+  </div>
+</div>
+
+<!-- INLINE AI CHAT -->
+<section class="section gradient-section-blue">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">💬 Ask Anything!</span>
+      <h2>🤖 Robocamp AI Assistant</h2>
+      <p>Powered by the 2026 Robocamp Handbook — ask any question and get an instant answer!</p>
+    </div>
+
+    <div class="inline-chat">
+      <div class="inline-chat-header">
+        <div class="inline-chat-avatar">🤖</div>
+        <div>
+          <div style="font-family:var(--font-heading);font-weight:700;font-size:1.05rem;">Robocamp Helper</div>
+          <div style="font-size:.8rem;opacity:.8;"><span class="status-dot"></span>Online — Ready to help!</div>
+        </div>
+      </div>
+      <div class="inline-chat-messages" id="inline-messages">
+        <div class="chat-typing" id="inline-typing">
+          <div class="chat-msg-bubble"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+        </div>
+      </div>
+      <div class="inline-quick-chips" id="inline-chips">
+        <button class="chip" onclick="inlineAsk('When is camp?')">📅 When is camp?</button>
+        <button class="chip" onclick="inlineAsk('How much does it cost?')">💰 How much does it cost?</button>
+        <button class="chip" onclick="inlineAsk('What should my child bring?')">🎒 What to bring?</button>
+        <button class="chip" onclick="inlineAsk('What activities are there?')">🎯 What activities?</button>
+        <button class="chip" onclick="inlineAsk('Where is camp held?')">📍 Where is camp?</button>
+        <button class="chip" onclick="inlineAsk('What is the medical policy?')">🏥 Medical policy?</button>
+        <button class="chip" onclick="inlineAsk('Is there a splash day?')">💦 Splash Day?</button>
+        <button class="chip" onclick="inlineAsk('How do I register?')">📝 How to register?</button>
+      </div>
+      <div class="inline-chat-input-area">
+        <input type="text" id="inline-chat-input" placeholder="Type your question here… e.g. 'What should my child wear?'" autocomplete="off">
+        <button id="inline-chat-send" onclick="inlineSend()">Ask 🤖</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ ACCORDION -->
+<section class="section" style="background:#fff;">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">❓ Common Questions</span>
+      <h2>Frequently Asked Questions</h2>
+    </div>
+
+    <div style="max-width:780px;margin:0 auto;">
+
+      <div class="faq-section-title">📅 Dates & Registration</div>
+      <div class="faq-item">
+        <div class="faq-question">When are the 2026 Robocamp sessions?<svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="faq-answer">Three sessions in 2026:<br><br>🟦 <strong>Elementary Session 1:</strong> June 1–4, 2026<br>🟣 <strong>Middle School (6th–8th):</strong> June 15–18, 2026<br>🟩 <strong>Elementary Session 2:</strong> July 13–16, 2026<br><br>All sessions run Monday–Thursday, 9:00 am – 5:00 pm.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">How do I register my child?<svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="faq-answer">Register at <strong><a href="https://westwoodrobots.org/robocamp" target="_blank">westwoodrobots.org/robocamp</a></strong> and pay at <strong><a href="https://rrisdpay.com" target="_blank">rrisdpay.com</a></strong> → High Schools → Westwood → Robotics Club. Spots are first-come, first-served! A 3% processing fee applies.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">What is the payment deadline?<svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="faq-answer">Payment deadline is <strong>Monday, June 1st</strong>. Register early — spots fill up fast! Join the waitlist if a session is full.</div>
+      </div>
+
+      <div class="faq-section-title">💰 Cost & Lunch</div>
+      <div class="faq-item">
+        <div class="faq-question">How much does Robocamp cost?<svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="faq-answer">💰 <strong>$325</strong> — without lunch (bring your own)<br>🍕 <strong>$350</strong> — with daily Domino's Pizza lunch<br><br>A 3% processing fee is added. Snacks are included for ALL campers!</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Is lunch provided?<svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="faq-answer">If you choose the $350 option, <strong>Domino's Pizza is provided daily for lunch.</strong> With the $325 option, campers bring their own lunch. Either way, morning and afternoon snacks are provided by the camp!</div>
+      </div>
+
+      <div class="faq-section-title">🎒 What to Bring</div>
+      <div class="faq-item">
+        <div class="faq-question">What should my child bring each day?<svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="faq-answer">
+          ✅ Reusable water bottle<br>
+          ✅ Extra snacks<br>
+          ✅ Lunch (if not opting for pizza)<br>
+          ✅ <strong>Closed-toed shoes</strong> (REQUIRED — no sandals!)<br>
+          ✅ Sunscreen (pre-applied + extra)<br>
+          ✅ Backpack<br>
+          ✅ Swim clothes for Thursday Splash Day 💦<br>
+          ✅ Positive attitude! 😊<br><br>
+          Camp provides: safety goggles, computers, activity materials, and snacks!
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Does my child need to wear specific shoes?<svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="faq-answer"><strong>Yes — closed-toed shoes are required every day!</strong> No sandals, flip-flops, or open-toed shoes in the Makerspace. Plan accordingly!</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Is there a water/Splash Day?<svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="faq-answer">Yes! 💦 <strong>Thursday is Splash Day</strong> for both elementary and middle school programs. Pack swim clothes for your child to change into. Water activities happen in the morning — it's a fan favorite!</div>
+      </div>
+
+      <div class="faq-section-title">🏥 Health & Medical</div>
+      <div class="faq-item">
+        <div class="faq-question">Is there a nurse on campus?<svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="faq-answer"><strong>No — there is no nurse on campus.</strong> Camp staff cannot administer medication. If your child needs medicine during the day, a parent or guardian must come to campus to give it. Please disclose all allergies and medical conditions during registration.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Can staff give my child their medication?<svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="faq-answer"><strong>No</strong> — staff will NOT administer any medication (including EpiPens, inhalers, or daily meds) except in a life-threatening emergency. A parent or guardian must come to campus to administer medication.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">My child has a food allergy — what do I do?<svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="faq-answer">Disclose all allergies in the registration form. Camp staff use this info to take appropriate precautions. For specific concerns, email <a href="mailto:westwood_robotics@roundrockisd.org">westwood_robotics@roundrockisd.org</a> before camp starts.</div>
+      </div>
+
+      <div class="faq-section-title">📋 Rules & Policies</div>
+      <div class="faq-item">
+        <div class="faq-question">What happens if my child misbehaves?<svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="faq-answer">Consequences escalate:<br><br>1️⃣ Temporary removal and separation from the group<br>2️⃣ Sent home for the day (parents notified, school admin notified)<br>3️⃣ Suspended from camp for the week — <strong>no refund issued</strong><br><br>For illegal acts, police may be notified.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Will my child use power tools?<svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="faq-answer"><strong>No — all power tools are completely off-limits!</strong> Heavy machinery is taped off. Robot-building uses "no cut" methods only. Safety goggles are provided when needed.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Will photos of my child be published?<svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="faq-answer">Yes — by participating, parents agree to allow photos to be published and used by Westwood Robotics (social media, website, etc.). This is included in the registration waiver.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Can the schedule change?<svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="faq-answer">Yes — the schedule can change at any time without notice. The Robocamp team are problem-solvers who will adapt as needed to keep camp safe and fun! 🛠️</div>
+      </div>
+
+      <div class="faq-section-title">📍 Location & Drop-off</div>
+      <div class="faq-item">
+        <div class="faq-question">Where is camp held?<svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="faq-answer">📍 <strong>Westwood High School — Makerspace, Room C1307</strong><br>12400 Mellow Meadow Dr, Austin, TX 78750<br><br>Drop-off and pick-up at the <strong>Main Entrance</strong> (blue circle on campus map).</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">What time is drop-off and pick-up?<svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="faq-answer">🌅 <strong>Drop-off: 9:00 am</strong> · 🌆 <strong>Pick-up: 5:00 pm</strong><br><br>Both at the Main Entrance. Please be on time for pick-up — counselors are available until ~5:15 pm.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- STILL HAVE QUESTIONS -->
+<section class="section" style="background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;text-align:center;">
+  <div class="container">
+    <div style="font-size:3rem;margin-bottom:.75rem;">💌</div>
+    <h2 style="color:#fff;margin-bottom:.75rem;">Still have a question?</h2>
+    <p style="opacity:.88;max-width:480px;margin:0 auto 2rem;">Our team is happy to help! Or use the AI assistant above — it knows everything in the handbook! 🤖</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <a href="mailto:westwood_robotics@roundrockisd.org" class="btn btn-outline btn-lg">📧 Email Us</a>
+      <a href="https://westwoodrobots.org/robocamp" target="_blank" class="btn btn-mint btn-lg">🌐 Camp Website</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div><div class="footer-brand">🤖 Robocamp '26</div><div class="footer-desc">A summer robotics camp at Westwood High School, Austin TX. Where kids build the future! 🚀</div></div>
+      <div><h4>Quick Links</h4><a href="sessions.html">📅 Sessions</a><a href="schedule.html">🗓 Schedule</a><a href="activities.html">🎯 Activities</a><a href="policies.html">📋 Policies</a><a href="faq.html">💬 FAQ</a></div>
+      <div><h4>Contact</h4><a href="mailto:westwood_robotics@roundrockisd.org">westwood_robotics@roundrockisd.org</a><a href="https://westwoodrobots.org/robocamp" target="_blank">westwoodrobots.org/robocamp</a><a href="https://instagram.com/ww_robotics" target="_blank">@ww_robotics</a></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 Westwood Robotics · Made with ❤️ for curious kids</span><span>Last updated: April 15, 2026</span></div>
+  </div>
+</footer>
+
+<!-- Floating chat hidden on FAQ page (inline version is present) -->
+<button id="chat-fab" style="display:none;" aria-label="Chat">🤖</button>
+<div id="chat-window" style="display:none;"></div>
+
+<script src="js/main.js"></script>
+<script src="js/chat.js"></script>
+<script>
+// ===== INLINE CHAT (FAQ Page) =====
+const inlineMsgs   = document.getElementById('inline-messages');
+const inlineTyping = document.getElementById('inline-typing');
+const inlineInput  = document.getElementById('inline-chat-input');
+
+function inlineAddBot(html) {
+  const d = document.createElement('div');
+  d.className = 'chat-msg bot';
+  d.innerHTML = `<div class="chat-msg-bubble">${html}</div>`;
+  inlineMsgs.insertBefore(d, inlineTyping);
+  inlineMsgs.scrollTop = inlineMsgs.scrollHeight;
+}
+function inlineAddUser(text) {
+  const d = document.createElement('div');
+  d.className = 'chat-msg user';
+  d.innerHTML = `<div class="chat-msg-bubble">${text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>`;
+  inlineMsgs.insertBefore(d, inlineTyping);
+  inlineMsgs.scrollTop = inlineMsgs.scrollHeight;
+}
+function showInlineTyping()  { inlineTyping.classList.add('visible');    inlineMsgs.scrollTop = inlineMsgs.scrollHeight; }
+function hideInlineTyping()  { inlineTyping.classList.remove('visible'); }
+
+function inlineAsk(question) {
+  inlineAddUser(question);
+  showInlineTyping();
+  const chips = document.getElementById('inline-chips');
+  if (chips) chips.style.display = 'none';
+  setTimeout(() => {
+    hideInlineTyping();
+    inlineAddBot(findAnswer(question));
+  }, 700 + Math.random() * 300);
+}
+
+function inlineSend() {
+  const text = inlineInput.value.trim();
+  if (!text) return;
+  inlineInput.value = '';
+  inlineAsk(text);
+}
+
+inlineInput?.addEventListener('keydown', e => {
+  if (e.key === 'Enter') { e.preventDefault(); inlineSend(); }
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    inlineAddBot(`👋 Hi! I'm the <strong>Robocamp 2026 AI Assistant</strong> — I know everything in the camp handbook!<br><br>Ask me about <strong>dates</strong>, <strong>cost</strong>, <strong>activities</strong>, <strong>what to bring</strong>, <strong>rules</strong>, or anything else. Or click a question below to get started! 🤖`);
+  }, 400);
+});
+</script>
+</body>
+</html>
